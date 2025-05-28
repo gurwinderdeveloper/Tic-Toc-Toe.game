@@ -1,75 +1,177 @@
+/* Universal reset for margin and padding, and set default font */
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    font-family: 'Inter', sans-serif; /* Use Inter font */
 }
 
+/* Body styling for background, text alignment, and full viewport height */
 body {
-   
-    background-color: #548687;
+    background-color: #548687; /* A pleasant teal/green background */
     text-align: center;
+    display: flex; /* Use flexbox for centering content */
+    flex-direction: column; /* Stack content vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    min-height: 100vh; /* Ensure body takes full viewport height */
+    color: #ffffc7; /* Light yellow text color for contrast */
 }
 
-.container {
-    height: 70vh;
+/* Main container for the game, ensuring it takes appropriate height and centers its content */
+main {
     display: flex;
-
-    justify-content: center;
-    align-items: center;
-}
-
-.game {
-    height: 60vmin;
-    width: 60vmin;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5vmin;
-}
-
-.box {
-    height: 18vmin;
-    width: 18vmin;
-    border-radius: 1rem;
-    border: none;
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
-    font-size: 8vmin;
-    color: #b0413e;
-    background-color: #ffffc7;
-}
-
-#reset-btn {
-    padding: 1rem;
-    font-size: 1.25rem;
-    background-color: #191913;
-    color: #fff;
-    border-radius: 1rem;
-    border: none;
-}
-
-#new-btn {
-    padding: 1rem;
-    font-size: 1.25rem;
-    background-color: #191913;
-    color: #fff;
-    border-radius: 1rem;
-    border: none;
-}
-
-#msg {
-    color: #ffffc7;
-    font-size: 5vmin;
-}
-
-.msg-container {
-    height: 100vmin;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-    gap: 4rem;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Add some padding around the main content */
+    width: 100%; /* Take full width */
+    max-width: 90%; /* Max width for larger screens */
 }
 
+/* Container for the game grid, controlling its height and centering */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Take full width of its parent */
+    max-width: 600px; /* Max width for the game container */
+    aspect-ratio: 1 / 1; /* Maintain a square aspect ratio for the game area */
+}
+
+/* Styling for the game grid itself */
+.game {
+    display: grid; /* Use CSS Grid for the 3x3 layout */
+    grid-template-columns: repeat(3, 1fr); /* Three equal columns */
+    grid-template-rows: repeat(3, 1fr); /* Three equal rows */
+    gap: 1.5vmin; /* Gap between grid items, responsive to viewport size */
+    width: 100%; /* Take full width of .container */
+    height: 100%; /* Take full height of .container */
+    max-width: 60vmin; /* Max width for the game grid itself, responsive */
+    max-height: 60vmin; /* Max height for the game grid itself, responsive */
+}
+
+/* Styling for individual game boxes */
+.box {
+    height: 100%; /* Take full height of its grid cell */
+    width: 100%; /* Take full width of its grid cell */
+    border-radius: 1rem; /* Rounded corners */
+    border: none; /* No default border */
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    font-size: 8vmin; /* Responsive font size for X/O */
+    color: #b0413e; /* Reddish color for X/O marks */
+    background-color: #ffffc7; /* Light yellow background for boxes */
+    cursor: pointer; /* Indicate clickable element */
+    display: flex; /* Use flexbox to center text inside the box */
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s ease, transform 0.1s ease; /* Smooth transition for hover/active states */
+}
+
+/* Hover effect for boxes */
+.box:not(:disabled):hover {
+    background-color: #ffe082; /* Slightly darker yellow on hover */
+    transform: scale(1.02); /* Slight scale effect */
+}
+
+/* Active (click) effect for boxes */
+.box:not(:disabled):active {
+    transform: scale(0.98); /* Slight shrink effect on click */
+}
+
+/* Styling for game control buttons (New Game, Reset Game) */
+.game-btn {
+    padding: 1rem 2rem; /* Ample padding */
+    font-size: 1.25rem; /* Readable font size */
+    background-color: #191913; /* Dark background */
+    color: #fff; /* White text */
+    border-radius: 1rem; /* Rounded corners */
+    border: none; /* No border */
+    cursor: pointer; /* Indicate clickable element */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease; /* Smooth transitions */
+}
+
+/* Hover effect for buttons */
+.game-btn:hover {
+    background-color: #333; /* Slightly lighter dark on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+/* Active effect for buttons */
+.game-btn:active {
+    transform: translateY(0); /* Return to original position */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2); /* Original shadow */
+}
+
+/* Styling for the message text (Winner/Draw) */
+#msg {
+    color: #ffffc7; /* Light yellow text color */
+    font-size: 5vmin; /* Responsive font size */
+    font-weight: bold; /* Bold text */
+    margin-bottom: 2rem; /* Space below the message */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for readability */
+}
+
+/* Message container styling */
+.msg-container {
+    position: fixed; /* Position over the game content */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black overlay */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem; /* Gap between message and button */
+    z-index: 1000; /* Ensure it's on top of other content */
+    backdrop-filter: blur(5px); /* Optional: blur background for a nice effect */
+}
+
+/* Utility class to hide elements */
 .hide {
     display: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 4xl; /* Adjust heading size for smaller screens */
+    }
+
+    .game {
+        max-width: 80vmin; /* Make game grid larger on smaller screens */
+        max-height: 80vmin;
+    }
+
+    .box {
+        font-size: 10vmin; /* Adjust box font size for smaller screens */
+    }
+
+    .game-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    #msg {
+        font-size: 7vmin;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 3xl; /* Further adjust heading size for very small screens */
+    }
+
+    .game {
+        max-width: 90vmin; /* Even larger game grid on very small screens */
+        max-height: 90vmin;
+    }
+
+    .box {
+        font-size: 12vmin; /* Further adjust box font size */
+    }
 }

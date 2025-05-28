@@ -5,16 +5,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tic-Tac-Toe Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
     <div class="msg-container hide">
-        <p id="msg">Winner</p>
-        <button id="new-btn">New Game</button>
+        <p id="msg">Winner Message</p>
+        <button id="new-btn" class="game-btn">New Game</button>
     </div>
-    <main>
-        <h1>Tic Tac Toe</h1>
+
+    <main class="flex flex-col items-center justify-center min-h-screen p-4">
+        <h1 class="text-5xl md:text-6xl font-bold text-white mb-8 drop-shadow-lg">Tic Tac Toe</h1>
         <div class="container">
             <div class="game">
                 <button class="box"></button>
@@ -28,8 +30,9 @@
                 <button class="box"></button>
             </div>
         </div>
-        <button id="reset-btn">Reset Game</button>
+        <button id="reset-btn" class="game-btn mt-8">Reset Game</button>
     </main>
+
     <script src="app.js"></script>
 </body>
 
